@@ -1,0 +1,17 @@
+# Agent de Navigation Intelligente - Rabat
+# Requirements
+
+# Aucune dépendance externe requise - le projet utilise uniquement la bibliothèque standard Python
+# Python 3.8+ requis
+
+# Modules utilisés (tous inclus dans Python standard):
+# - typing (annotations de type)
+# - collections (deque pour BFS)
+# - heapq (priority queue pour UCS et A*)
+# - abc (classes abstraites)
+# - sys (gestion des chemins)
+
+# Pour le développement (optionnel):
+# pytest>=7.0.0  # Pour les tests unitaires
+# black>=22.0.0  # Formatage du code
+# mypy>=0.950    # Vérification de types
