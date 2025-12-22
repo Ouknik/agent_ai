@@ -1,12 +1,14 @@
 <div align="center">
 
-# 🚗 Agent de Navigation Intelligente - Rabat
+# 🚗 Agent de Navigation Intelligente au Maroc
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Completed-success.svg)]()
 
-**Un projet d'intelligence artificielle implémentant des algorithmes de recherche pour la navigation autonome dans la ville de Rabat**
+**Un projet d'intelligence artificielle implémentant des algorithmes de recherche pour la navigation autonome**
+
+🏙️ **Rabat** (Quartiers) • 🗺️ **Maroc** (Villes) • 🤖 **Problem Solving Agent**
 
 [Installation](#-installation) • [Utilisation](#-utilisation) • [Documentation](#-documentation) • [Résultats](#-résultats)
 
@@ -32,19 +34,32 @@
 
 ## 🎯 À propos
 
-Ce projet implémente un **agent intelligent de navigation** capable de se déplacer automatiquement entre les quartiers de Rabat en utilisant des algorithmes de recherche classiques de l'intelligence artificielle. 
+Ce projet implémente des **agents intelligents de navigation** capables de se déplacer automatiquement en utilisant des algorithmes de recherche classiques de l'intelligence artificielle.
+
+### Deux Applications Pratiques
+
+1. **🏙️ Navigation Rabat** (`rabat_navigation_tp.py`)
+   - Navigation entre les **quartiers de Rabat**
+   - Graphe de **8 quartiers** (Agdal, Hassan, Medina, Ocean, etc.)
+   - Distances en **minutes**
+
+2. **🗺️ Navigation Maroc** (`tp_villes_maroc.py`)
+   - Navigation entre les **villes marocaines**
+   - Graphe de **6 villes** (Rabat, Casablanca, Marrakech, etc.)
+   - Distances en **kilomètres** 
 
 ### Objectifs pédagogiques
 - Comprendre l'**architecture AIMA** (Artificial Intelligence: A Modern Approach)
 - Maîtriser la **formulation de problèmes** en IA
 - Implémenter et comparer des **algorithmes de recherche**
 - Développer un **Problem Solving Agent** complet
+- Appliquer les concepts sur des **cas réels** (Rabat et Maroc)
 
 ### Contexte
-Le problème est modélisé par un **graphe pondéré** où:
-- Les **nœuds** représentent les quartiers de Rabat
-- Les **arêtes** représentent les routes entre quartiers
-- Les **poids** représentent le temps de trajet en minutes
+Les problèmes sont modélisés par des **graphes pondérés** où:
+- Les **nœuds** représentent des lieux (quartiers ou villes)
+- Les **arêtes** représentent les routes/chemins
+- Les **poids** représentent les distances (minutes ou kilomètres)
 
 ---
 
@@ -58,9 +73,9 @@ Le problème est modélisé par un **graphe pondéré** où:
 | **BFS** | Non-informé | ✅ Oui (si coût uniforme) | O(b^d) |
 | **UCS** | Non-informé | ✅ Oui | O(b^(C*/ε)) |
 | **A*** | Informé | ✅ Oui (heuristique admissible) | O(b^d) |
+s Disponibles
 
-### 🗺️ Graphe de la Ville de Rabat
-
+#### 🏙️ Graphe de Rabat (8 quartiers)
 ```
     Agdal ──10── Hassan ──8── Medina ──5── Kasbah
       │            │           │
@@ -70,6 +85,27 @@ Le problème est modélisé par un **graphe pondéré** où:
       │                         │
       8                        10
       └────── Hay_Riad ────────┘
+               (15)
+```
+
+#### 🗺️ Graphe du Maroc (6 villes)
+```
+                    K (Kénitra)
+                   / \
+               208/   \407
+                 /     \
+            R (Rabat)   M (Marrakech)
+                |         |
+              87|         |160
+                |         |
+            C (Casablanca)|
+               / \        |
+           105/   \238    |
+             /     \      |
+       E (El Jadida)  S (Safi)
+             \     /
+           161\   /160
+               \ /iad ────────┘
                (15)
 ```
 
@@ -95,30 +131,51 @@ Percevoir → Formuler Objectif → Formuler Problème → Rechercher → Exécu
 git clone https://github.com/votre-username/agent_ai.git
 cd agent_ai
 ```
-
-2. **Créer un environnement virtuel (optionnel mais recommandé)**
-```bash
-python -m venv venv
-# Windows
-venv\Scripts\activate
-# Linux/Mac
-source venv/bin/activate
-```
-
-3. **Installer les dépendances**
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 💻 Utilisation
-
-### Exécution Rapide
-
+#### 🏙️ Navigation Rabat
 ```bash
 cd AiPython/ch2_agent/notebooks
 python rabat_navigation_tp.py
+```
+
+**Le programme exécute automatiquement trois parties:**
+
+1. **Partie 1**: Comparaison des 4 algorithmes (Agdal → Ocean)
+2. **Partie 2**: Test du Problem Solving Agent (Agdal → Kasbah)
+3. **Partie 3**: Suivi détaillé de BFS (Agdal → Medina)
+
+#### 🗺️ Navigation Maroc
+```bash
+cd AiPython/ch2_agent/notebooks
+python tp_villes_maroc.py
+```
+
+**Le programme exécute les 4 exercices:**
+
+1. **Exercice 1**: Construction du graphe (Rabat → Marrakech)
+2. **Exercice 2**: Recherche aveugle (DFS, BFS, UCS)
+3. **Exercice 3**: Heuristiques & A*
+4. **Exercice 4**: Comparaison des chemins
+
+### Personnalisation
+
+#### Pour Rabat (`rabat_navigation_tp.py`):
+```python
+# Changer le point de départ et d'arrivée
+start = "Souissi"
+goal = "Kasbah"
+
+# Utiliser une heuristique différente
+solution = RabatSearchStrategy.a_star(problem, HEURISTICS_TO_KASBAH)
+```
+
+#### Pour le Maroc (`tp_villes_maroc.py`):
+```python
+# Modifier l'état initial et but
+ETAT_INITIAL = "C"  # Casablanca
+ETAT_BUT = "K"      # Kénitra
+
+# Tester un seul algorithme
+solution = VillesMarocSearchStrategy.ucs(problem_maroc, verbose=True
 ```
 
 ### Options d'Exécution
@@ -141,20 +198,36 @@ goal = "Kasbah"
 # Utiliser une heuristique différente
 solution = RabatSearchStrategy.a_star(problem, HEURISTICS_TO_KASBAH)
 ```
+🏙️ Résultats - Navigation Rabat (Agdal → Ocean)
 
----
+| Algorithme | Chemin | Coût (min) | Étapes | Optimal |
+|-----------|--------|------------|---------|---------|
+| **DFS** | Agdal → Hassan → Ocean | 30 | 2 | ❌ |
+| **BFS** | Agdal → Hassan → Ocean | 30 | 2 | ❌ |
+| **UCS** | Agdal → Aviation → Ocean | **23** | 2 | ✅ |
+| **A*** | Agdal → Aviation → Ocean | **23** | 2 | ✅ |
 
-## 🏗️ Architecture
+### 🗺️ Résultats - Navigation Maroc (Rabat → Marrakech)
 
-### Diagramme de Classes
+| Algorithme | Chemin | Coût (km) | Étapes | Optimal |
+|-----------|--------|-----------|---------|---------|
+| **DFS** | R → C → S → M | **485** | 3 | ✅ |
+| **BFS** | R → K → M | 615 | 2 | ❌ |
+| **UCS** | R → C → S → M | **485** | 3 | ✅ |
+| **A*** | R → C → S → M | **485** | 3 | ✅ |
 
-```
-┌─────────────┐         ┌──────────────────┐
-│   Agent     │◄────────│ ProblemSolving   │
-│  (Abstract) │         │      Agent       │
-└─────────────┘         └──────────────────┘
-       ▲                         │
-       │                         │
+### 🎯 Analyse Comparative
+
+#### Navigation Rabat:
+- ✅ **UCS** et **A*** trouvent le chemin optimal (23 min)
+- ⚠️ **DFS** et **BFS** trouvent une solution sous-optimale (30 min)
+- 🚀 **A*** utilise l'heuristique pour optimiser la recherche
+
+#### Navigation Maroc:
+- ✅ **DFS**, **UCS** et **A*** trouvent le chemin optimal (485 km)
+- ⚠️ **BFS** trouve le chemin avec moins d'étapes mais distance plus longue (615 km)
+- 📍 Le chemin optimal: **R → C → S → M** (3 étapes, 485 km)
+- 🔍 **BFS** privilégie le nombre d'étapes, pas la distance optimal
        │                   ┌──────────┐
        │                   │ Problem  │
        │                   └──────────┘
@@ -170,37 +243,65 @@ solution = RabatSearchStrategy.a_star(problem, HEURISTICS_TO_KASBAH)
 │    ment      │
 └──────────────┘
 ```
+├── requirements.txt                   # Dépendances Python
+│
+└── AiPython/
+    └── ch2_agent/
+        ├── src/
+        │   ├── __init__.py
+        │   ├── agent.py               # Classes de base (Agent, Environment)
+        │   └── problem_solving_agent.py  # Problem, SearchStrategy, Trace
+        │
+        └── notebooks/
+            ├── rabat_navigation_tp.py     # 🏙️ Navigation Rabat (Quartiers)
+            ├── tp_villes_maroc.py         # 🗺️ Navigation Maroc (Villes)
+            └── README_TP.md               # Documentation détaillée
+```
 
-### Composants Principaux
+### Relations entre les Fichiers
 
-- **Agent**: Classe abstraite définissant l'interface de base
-- **Environment**: Représente la ville de Rabat et ses interactions
-- **Problem**: Formulation du problème de navigation
-- **SearchStrategy**: Implémentation des algorithmes de recherche
-- **Trace**: Système de suivi et de logging
+```Navigation Rabat (Recherche Simple)
 
----
+```python
+from problem_solving_agent import NavigationProblem
+from rabat_navigation_tp import RabatSearchStrategy, RABAT_GRAPH
 
-## 📊 Résultats
+# Créer un problème
+problem = NavigationProblem("Agdal", "Ocean", RABAT_GRAPH)
 
-### Comparaison des Performances
+# Utiliser BFS
+solution = RabatSearchStrategy.bfs(problem, verbose=False)
+print(f"Chemin trouvé: {' → '.join(solution)}")
+# Output: Agdal → Hassan → Ocean
+```
 
-| Algorithme | Chemin | Coût (min) | Étapes | Optimal |
-|-----------|--------|------------|---------|---------|
-| **DFS** | Agdal → Hassan → Ocean | 30 | 2 | ❌ |
-| **BFS** | Agdal → Hassan → Ocean | 30 | 2 | ❌ |
-| **UCS** | Agdal → Aviation → Ocean | **23** | 2 | ✅ |
-| **A*** | Agdal → Aviation → Ocean | **23** | 2 | ✅ |
+### Exemple 2: Navigation Maroc (Recherche avec Heuristique)
 
-### 🎯 Analyse
+```python
+from problem_solving_agent import NavigationProblem
+from tp_villes_maroc import VillesMarocSearchStrategy, GRAPH_VILLES_MAROC, HEURISTIQUES_MARRAKECH
 
-- ✅ **UCS** et **A*** trouvent le chemin optimal (23 min)
-- ⚠️ **DFS** et **BFS** trouvent une solution valide mais sous-optimale (30 min)
-- 🚀 **A*** est le plus efficace grâce à l'heuristique
+# Créer le problème
+problem = NavigationProblem("R", "M", GRAPH_VILLES_MAROC)
 
----
+# Utiliser A* avec heuristique
+solution = VillesMarocSearchStrategy.a_star(problem, HEURISTIQUES_MARRAKECH, verbose=False)
+print(f"Chemin optimal: {' → '.join(solution)}")
+# Output: R → C → S → M (485 km)
+```
 
-## 📁 Structure du Projet
+### Exemple 3: Comparaison d'Algorithmes
+
+```python
+# Pour Rabat
+results_rabat = compare_all_algorithms()
+
+# Afficher les résultats
+for algo, path in results_rabat.items():
+    print(f"{algo}: {' → '.join(path)}")
+```
+
+### Exemple 4re du Projet
 
 ```
 agentAi/
@@ -232,18 +333,38 @@ from rabat_navigation_tp import RabatSearchStrategy, RABAT_GRAPH
 
 # Créer un problème
 problem = NavigationProblem("Agdal", "Ocean", RABAT_GRAPH)
-
-# Utiliser BFS
-solution = RabatSearchStrategy.bfs(problem, verbose=False)
-print(f"Chemin trouvé: {' → '.join(solution)}")
-# Output: Agdal → Hassan → Ocean
-```
-
-### Exemple 2: Comparaison d'Algorithmes
+#### Classes de Recherche - Rabat
 
 ```python
-# Comparer DFS, BFS, UCS et A*
-results = compare_all_algorithms()
+# RabatSearchStrategy
+RabatSearchStrategy.dfs(problem, verbose=True)
+RabatSearchStrategy.bfs(problem, verbose=True)
+RabatSearchStrategy.ucs(problem, verbose=True)
+RabatSearchStrategy.a_star(problem, heuristics, verbose=True)
+```
+
+#### Classes de Recherche - Maroc
+
+```python
+# VillesMarocSearchStrategy
+VillesMarocSearchStrategy.dfs(problem, verbose=True)
+VillesMarocSearchStrategy.bfs(problem, verbose=True)
+VillesMarocSearchStrategy.ucs(problem, verbose=True)
+VillesMarocSearchStrategy.a_star(problem, heuristics, verbose=True)
+```
+
+#### Environnement et Agent
+
+```python
+# Environnement
+env = RabatEnvironment(graph)
+env.set_agent_location(agent, location)
+env.get_percepts(agent)
+env.apply_action(agent, action)
+
+# Problem Solving Agent
+agent = ProblemSolvingAgent(name, search_strategy, problem)
+agent.program(perceptms()
 
 # Afficher les résultats
 for algo, path in results.items():
@@ -280,13 +401,32 @@ env.set_agent_location(agent, "Agdal")
 #### BFS (Breadth-First Search)
 - **Stratégie**: Explore niveau par niveau
 - **Structure**: Queue (FIFO)
-- **Complet**: Oui
-- **Optimal**: Oui (coûts uniformes)
+### Algorithmes
+- [ ] Ajouter d'autres algorithmes (IDS, Bidirectional Search)
+- [ ] Implémenter des variantes (Greedy Best-First, Weighted A*)
 
-#### UCS (Uniform Cost Search)
-- **Stratégie**: Explore par coût croissant
-- **Structure**: Priority Queue
-- **Complet**: Oui
+### Visualisation
+- [ ] Interface graphique pour visualiser les chemins
+- [ ] Animation des algorithmes en temps réel
+- [ ] Graphiques de comparaison des performances
+
+### Fonctionnalités
+- [ ] Support de graphes dynamiques (embouteillages, routes fermées)
+- [ ] Intégration avec des cartes réelles (OpenStreetMap)
+- [ ] API REST pour le service de navigation
+- [ ] Plus de villes et quartiers marocains
+
+### Qualité
+- [ ] Tests unitaires complets
+- [ ] Benchmarks de performance
+- [ ] Documentation API complètee
+- **Équipe Projet** - *Développement initial*
+
+### Contributions
+
+- **Navigation Rabat**: Implémentation complète avec Problem Solving Agent
+- **Navigation Maroc**: Exercices pratiques avec 4 algorithmes comparés
+- **Architecture AIMA**: Classes de base suivant les standards AIMA
 - **Optimal**: Oui
 
 #### A* (A-star)
