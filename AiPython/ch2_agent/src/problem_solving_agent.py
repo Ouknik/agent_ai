@@ -170,6 +170,30 @@ class SearchStrategy:
         
         print("✗ AUCUN CHEMIN TROUVÉ")
         return None
+
+# ----------------------------
+# Fonctions de recherche simplifiées 
+# ----------------------------
+def bfs(graphe: dict, etat_initial: str, etat_but: str):
+    """Recherche en largeur - Breadth First Search"""
+    problem = NavigationProblem(etat_initial, etat_but, graphe)
+    return SearchStrategy.bfs(problem)
+
+def dfs(graphe: dict, etat_initial: str, etat_but: str):
+    """Recherche en profondeur - Depth First Search"""
+    problem = NavigationProblem(etat_initial, etat_but, graphe)
+    return SearchStrategy.dfs(problem)
+
+def ucs(graphe: dict, etat_initial: str, etat_but: str):
+    """Recherche à coût uniforme - Uniform Cost Search"""
+    problem = NavigationProblem(etat_initial, etat_but, graphe)
+    return SearchStrategy.ucs(problem)
+
+def astar(graphe: dict, etat_initial: str, etat_but: str, heuristique: dict):
+    """Recherche A* avec heuristique"""
+    problem = NavigationProblem(etat_initial, etat_but, graphe)
+    return SearchStrategy.a_star(problem, heuristique)
+
 # ----------------------------
 # Tracabilite  
 # ----------------------------

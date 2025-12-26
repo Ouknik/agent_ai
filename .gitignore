@@ -136,3 +136,7 @@ Thumbs.db
 # Project specific
 output.txt
 *.pdf
+
+
+# rabat_navigation_tp.py
+/AiPython/ch2_agent/notebooks/rabat_navigation_tp.py

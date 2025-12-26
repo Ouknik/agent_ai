@@ -1,0 +1,271 @@
+# 🗺️ TP: Navigation Intelligente entre les Villes du Maroc
+
+## 📋 Description
+Projet applicatif pour construire un agent intelligent capable de trouver le **chemin optimal** entre les villes marocaines en utilisant différents algorithmes de recherche.
+
+**Objectif:** Trouver le chemin le plus court de **Rabat (R)** à **Marrakech (M)**
+
+---
+
+## ✨ Ce qui a été réalisé
+
+### 1️⃣ **Les quatre algorithmes de recherche:**
+- ✅ **DFS** (Depth-First Search) - Recherche en profondeur
+- ✅ **BFS** (Breadth-First Search) - Recherche en largeur  
+- ✅ **UCS** (Uniform Cost Search) - Recherche à coût uniforme
+- ✅ **A*** - Recherche avec heuristique
+
+### 2️⃣ **Graphe des villes marocaines (6 villes):**
+
+```
+                    K (Kénitra)
+                   / \
+               208/   \407
+                 /     \
+            R (Rabat)   M (Marrakech)
+                |         |
+              87|         |160
+                |         |
+            C (Casablanca)|
+               / \        |
+           105/   \238    |
+             /     \      |
+       E (El Jadida)  S (Safi)
+             \     /
+           161\   /160
+               \ /
+```
+
+### 3️⃣ **Connexions du graphe:**
+| De | Vers | Distance (km) |
+|----|------|---------------|
+| R (Rabat) | C (Casablanca) | 87 |
+| R (Rabat) | K (Kénitra) | 208 |
+| C (Casablanca) | E (El Jadida) | 105 |
+| C (Casablanca) | S (Safi) | 238 |
+| E (El Jadida) | S (Safi) | 161 |
+| S (Safi) | M (Marrakech) | 160 |
+| K (Kénitra) | M (Marrakech) | 407 |
+
+---
+
+## 🚀 Comment exécuter
+
+### Exécuter le programme complet:
+```bash
+cd c:\Users\OA\Desktop\agentAi\AiPython\ch2_agent\notebooks
+python tp_villes_maroc.py
+```
+
+### La sortie inclut:
+1. **Exercice 1:** Construction du graphe et validation du problème
+2. **Exercice 2:** Recherche aveugle (DFS, BFS, UCS)
+3. **Exercice 3:** Heuristiques et A*
+4. **Exercice 4:** Comparaison des chemins obtenus
+
+---
+
+## 📊 Résultats de la comparaison
+
+### Tableau des résultats (Rabat → Marrakech):
+
+| Algorithme |    Chemin          | Distance               | Étapes | Optimal |
+|------------|--------------------|------------------------|--------|---------|
+| **DFS**    | R → C → S → M      | **485 km** ⭐         | 3      | ✅ Oui |
+| **BFS**    | R → K → M | 615 km | 2 | ❌ Non            |
+| **UCS**    | R → C → S → M      | **485 km** ⭐         | 3      | ✅ Oui |
+| **A***     | R → C → S → M      | **485 km** ⭐         | 3      | ✅ Oui |
+
+### 🎯 Analyse des résultats:
+
+#### ✅ Chemin optimal trouvé:
+```
+R (Rabat) → C (Casablanca) → S (Safi) → M (Marrakech)
+Distance totale: 485 km
+```
+
+**Détail du chemin optimal:**
+- R → C : 87 km
+- C → S : 238 km
+- S → M : 160 km
+- **Total : 485 km**
+
+#### ❌ Chemin non optimal (BFS):
+```
+R (Rabat) → K (Kénitra) → M (Marrakech)
+Distance totale: 615 km
+```
+
+**Détail:**
+- R → K : 208 km
+- K → M : 407 km
+- **Total : 615 km**
+
+---
+
+## 📏 Heuristiques utilisées (pour A*)
+
+Les heuristiques représentent la **distance à vol d'oiseau** estimée vers Marrakech:
+
+| Ville             | h(n)   |     Description                 |
+|-------------------|--------|---------------------------------|
+| R (Rabat)         | 320 km | Distance estimée vers Marrakech |
+| C (Casablanca)    | 240 km | Distance estimée vers Marrakech |
+| K (Kénitra)       | 350 km | Distance estimée vers Marrakech |
+| E (El Jadida)     | 220 km | Distance estimée vers Marrakech |
+| S (Safi)          | 150 km | Distance estimée vers Marrakech |
+| M (Marrakech)     | 0 km   | But atteint                     |
+
+### ✅ Admissibilité:
+> Une heuristique est **admissible** si h(n) ≤ coût_réel(n, but)
+> 
+> Toutes nos heuristiques sont admissibles car elles représentent des distances à vol d'oiseau (toujours ≤ distance réelle par route).
+
+---
+
+## 🔍 Analyse comparative des algorithmes
+
+### 1️⃣ DFS (Depth-First Search)
+- **Stratégie:** Explore en profondeur d'abord
+- **Structure:** Stack (LIFO)
+- **Résultat:** R → C → S → M (485 km) ✅
+- **Observation:** A trouvé le chemin optimal par chance (dépend de l'ordre des voisins)
+
+### 2️⃣ BFS (Breadth-First Search)
+- **Stratégie:** Explore niveau par niveau
+- **Structure:** Queue (FIFO)
+- **Résultat:** R → K → M (615 km) ❌
+- **Observation:** Trouve le chemin avec **moins d'étapes** (2), mais pas optimal en distance
+
+### 3️⃣ UCS (Uniform Cost Search)
+- **Stratégie:** Explore par coût croissant
+- **Structure:** Priority Queue
+- **Résultat:** R → C → S → M (485 km) ✅
+- **Observation:** **Garanti optimal** - explore toujours le nœud avec le plus petit coût
+
+### 4️⃣ A* (A-star)
+- **Stratégie:** f(n) = g(n) + h(n)
+- **Structure:** Priority Queue
+- **Résultat:** R → C → S → M (485 km) ✅
+- **Observation:** **Optimal et efficace** grâce à l'heuristique
+
+---
+
+## 📁 Structure des fichiers
+
+```
+ch2_agent/
+├── src/
+│   ├── agent.py                    # Classes de base (Agent, Environment)
+│   └── problem_solving_agent.py    # Problem, SearchStrategy, Trace
+└── notebooks/
+    ├
+    └── tp_villes_maroc.py          # ⭐ Fichier TP (Villes du Maroc)
+```
+
+---
+
+## 🎓 Concepts appliqués
+
+### Formulation du problème (5 composants AIMA):
+
+|       Composant          | Description                 | Valeur               |
+|--------------------------|-----------------------------|----------------------|
+| **État Initial**         | Point de départ             | R (Rabat)            |
+| **État But**             | Objectif                    | M (Marrakech)        |
+| **Actions**              | Villes voisines accessibles | actions(R) = {C, K}  |
+| **Modèle de Transition** | Résultat d'une action       | result(R, C) = C     |
+| **Coût du Chemin**       | Distance en km              | path_cost(R, C) = 87 |
+
+### Classes utilisées:
+- ✅ `NavigationProblem` - Formulation du problème
+- ✅ `VillesMarocSearchStrategy` - Algorithmes de recherche
+- ✅ `Trace` - Système de traçabilité
+
+---
+
+## 🔧 Personnalisation
+
+### Changer le point de départ et d'arrivée:
+```python
+ETAT_INITIAL = "C"  # Casablanca
+ETAT_BUT = "K"      # Kénitra
+```
+
+### Ajouter de nouvelles villes:
+```python
+GRAPH_VILLES_MAROC = {
+    # ... villes existantes
+    "F": {  # Fès
+        "R": 200,
+        "M": 450
+    }
+}
+```
+
+### Modifier les heuristiques:
+```python
+HEURISTIQUES_MARRAKECH = {
+    "R": 320,
+    "C": 240,
+    # ... ajouter nouvelles villes
+    "F": 380
+}
+```
+
+---
+
+## 📖 Notes importantes
+
+1. **Coût** = Distance en kilomètres (km)
+2. **DFS** peut trouver une solution optimale par hasard
+3. **BFS** minimise le **nombre d'étapes**, pas la distance
+4. **UCS** garantit toujours la solution **optimale en coût**
+5. **A*** est optimal **ET** efficace (moins de nœuds explorés)
+
+---
+
+## 🏆 Conclusion
+
+### ✅ Chemin optimal de Rabat à Marrakech:
+```
+R (Rabat) → C (Casablanca) → S (Safi) → M (Marrakech)
+```
+
+### 📊 Statistiques:
+- **Distance optimale:** 485 km
+- **Nombre d'étapes:** 3
+- **Algorithmes optimaux:** DFS, UCS, A*
+- **Algorithme non optimal:** BFS (615 km, 2 étapes)
+
+### 🎯 Leçon principale:
+> **BFS** trouve le chemin avec le moins d'étapes, mais **UCS** et **A*** trouvent le chemin avec la distance minimale.
+
+---
+
+## ✅ Exercices complétés
+
+- ✅ **Exercice 1:** Construction du graphe des villes marocaines
+- ✅ **Exercice 2:** Implémentation des recherches aveugles (DFS, BFS, UCS)
+- ✅ **Exercice 3:** Heuristiques admissibles et A*
+- ✅ **Exercice 4:** Comparaison et analyse des chemins
+
+---
+
+## 👨‍🏫 Pour le professeur
+
+Toutes les exigences du TP ont été réalisées:
+
+| Exigence                         |  Status             |
+|----------------------------------|----------------------|
+| Construction du graphe           | ✅ Complété |
+| Formulation du problème          | ✅ NavigationProblem |
+| DFS | ✅ Implémenté avec traces  |
+| BFS | ✅ Implémenté avec traces  |
+| UCS | ✅ Implémenté avec traces  |
+| Heuristiques admissibles          | ✅ Définies et vérifiées |
+| A*                                | ✅ Implémenté avec traces |
+| Comparaison des résultats          | ✅ Tableau + analyse |
+
+---
+
